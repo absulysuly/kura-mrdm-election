@@ -72,7 +72,7 @@ LARGE_FILES=$(find "$SOURCE_PATH" -type f -size +50M 2>/dev/null || true)
 if [ -z "$LARGE_FILES" ]; then
     LARGE_FILE_COUNT=0
 else
-    LARGE_FILE_COUNT=$(echo "$LARGE_FILES" | wc -l)
+    LARGE_FILE_COUNT=$(printf '%s\n' "$LARGE_FILES" | grep -c .)
 fi
 
 if [ "$LARGE_FILE_COUNT" -gt 0 ]; then
@@ -102,15 +102,24 @@ fi
 
 # Copy files
 print_info "Copying files..."
+# Ensure destination directory exists
+mkdir -p "$DEST_PATH"
+
 if command -v rsync &> /dev/null; then
     print_info "Using rsync for better progress tracking..."
-    # Ensure destination directory exists
-    mkdir -p "$DEST_PATH"
+    # Copy contents of source directory into destination
     rsync -av --progress "$SOURCE_PATH/" "$DEST_PATH/"
 else
     print_info "Using cp (rsync not available)..."
-    # cp -r will create the destination directory
-    cp -r "$SOURCE_PATH" "$DEST_PATH"
+    # Copy contents of source directory into destination
+    # Note: Using bash globbing to copy contents, not the directory itself
+    shopt -s dotglob
+    cp -r "$SOURCE_PATH/"* "$DEST_PATH/" 2>/dev/null || {
+        print_warning "No files found or copy failed, trying alternative method..."
+        # Fallback: copy everything from source to destination
+        (cd "$SOURCE_PATH" && tar cf - .) | (cd "$DEST_PATH" && tar xf -)
+    }
+    shopt -u dotglob
 fi
 
 print_info "Copy completed!"
