@@ -1,9 +1,11 @@
 # kura-mrdm-election
 mardm
 
-## Copying Large Folders to This Repository
+## 📁 Copying Large Folders to This Repository
 
-Need to copy a large folder from your local drive to this repository? We've got you covered!
+Need to copy a large folder from your local drive to this repository? **[START HERE](START_HERE.md)** 👈
+
+We've created comprehensive documentation and tools to help you!
 
 ### Quick Start
 
