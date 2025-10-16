@@ -29,6 +29,7 @@ This is the easiest and safest method:
 3. **Copy your HamletUnified files:**
    - Option A: Copy into the `HamletUnified` subdirectory:
      ```cmd
+     REM /E = Copy subdirectories including empty ones, /I = Assume destination is directory, /Y = Suppress confirmation
      xcopy E:\HamletUnified\* HamletUnified\ /E /I /Y
      ```
    - Option B: Copy all files to root (not recommended if you have many files):
@@ -60,7 +61,7 @@ For detailed instructions on other methods (direct push from your folder, or usi
 
 Once your files are pushed to this repository:
 - ✅ They will be accessible at: https://github.com/absulysuly/kura-mrdm-election
-- ✅ AI systems (AIS) can access and analyze the content through GitHub
+- ✅ AI systems can access and analyze the content through GitHub
 - ✅ You can share the repository URL with any AI service or collaborators
 
 ## Need Help?
