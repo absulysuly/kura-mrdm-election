@@ -14,7 +14,8 @@
 ### 1️⃣ Clone This Repository (if you haven't already)
 
 ```bash
-git clone https://github.com/absulysuly/kura-mrdm-election.git
+# Replace with your repository URL
+git clone <your-repository-url>
 cd kura-mrdm-election
 ```
 
@@ -177,7 +178,7 @@ chmod +x copy-folder.sh
     → Then use helper script
     ↓
 4. Verify on GitHub
-   → Visit: https://github.com/absulysuly/kura-mrdm-election
+   → Visit your repository page on GitHub
    ↓
 5. Done! ✨
 ```
