@@ -68,16 +68,14 @@ print_info "File count: $FILE_COUNT"
 
 # Check for large files (>50MB)
 print_info "Checking for large files (>50MB)..."
-LARGE_FILES=$(find "$SOURCE_PATH" -type f -size +50M 2>/dev/null || true)
-if [ -z "$LARGE_FILES" ]; then
-    LARGE_FILE_COUNT=0
-else
-    LARGE_FILE_COUNT=$(printf '%s\n' "$LARGE_FILES" | grep -c .)
-fi
+LARGE_FILE_COUNT=$(find "$SOURCE_PATH" -type f -size +50M 2>/dev/null | wc -l)
+LARGE_FILES=$(find "$SOURCE_PATH" -type f -size +50M 2>/dev/null | head -10)
 
 if [ "$LARGE_FILE_COUNT" -gt 0 ]; then
     print_warning "Found $LARGE_FILE_COUNT file(s) larger than 50MB"
-    echo "$LARGE_FILES" | head -10
+    if [ -n "$LARGE_FILES" ]; then
+        echo "$LARGE_FILES"
+    fi
     if [ "$LARGE_FILE_COUNT" -gt 10 ]; then
         print_warning "... and $(($LARGE_FILE_COUNT - 10)) more"
     fi
@@ -111,15 +109,9 @@ if command -v rsync &> /dev/null; then
     rsync -av --progress "$SOURCE_PATH/" "$DEST_PATH/"
 else
     print_info "Using cp (rsync not available)..."
-    # Copy contents of source directory into destination
-    # Note: Using bash globbing to copy contents, not the directory itself
-    shopt -s dotglob
-    cp -r "$SOURCE_PATH/"* "$DEST_PATH/" 2>/dev/null || {
-        print_warning "No files found or copy failed, trying alternative method..."
-        # Fallback: copy everything from source to destination
-        (cd "$SOURCE_PATH" && tar cf - .) | (cd "$DEST_PATH" && tar xf -)
-    }
-    shopt -u dotglob
+    # Copy contents of source directory into destination using tar
+    # This preserves all file attributes and handles all file types correctly
+    (cd "$SOURCE_PATH" && tar cf - .) | (cd "$DEST_PATH" && tar xfp -)
 fi
 
 print_info "Copy completed!"
