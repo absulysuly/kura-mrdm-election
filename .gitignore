@@ -1,0 +1,88 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Temporary Files
+*.tmp
+*.temp
+*.swp
+*.swo
+.*.swp
+
+# Log Files
+*.log
+logs/
+
+# Environment Files
+.env
+.env.local
+.env.*.local
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# Build and Dependency Directories
+node_modules/
+bower_components/
+vendor/
+dist/
+build/
+out/
+target/
+
+# Compiled Files
+*.o
+*.so
+*.dll
+*.dylib
+*.exe
+*.class
+*.pyc
+*.pyo
+__pycache__/
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Cache Directories
+.cache/
+*.cache
+.sass-cache/
+.npm/
+.yarn/
+
+# Test Coverage
+coverage/
+.coverage
+*.cover
+htmlcov/
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup Files
+*.bak
+*.backup
+
+# Add any project-specific exclusions below this line
+# Example:
+# my-large-data/*.csv
