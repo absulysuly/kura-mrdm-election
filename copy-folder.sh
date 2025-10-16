@@ -69,7 +69,11 @@ print_info "File count: $FILE_COUNT"
 # Check for large files (>50MB)
 print_info "Checking for large files (>50MB)..."
 LARGE_FILES=$(find "$SOURCE_PATH" -type f -size +50M 2>/dev/null || true)
-LARGE_FILE_COUNT=$(echo "$LARGE_FILES" | grep -c . || echo "0")
+if [ -z "$LARGE_FILES" ]; then
+    LARGE_FILE_COUNT=0
+else
+    LARGE_FILE_COUNT=$(echo "$LARGE_FILES" | wc -l)
+fi
 
 if [ "$LARGE_FILE_COUNT" -gt 0 ]; then
     print_warning "Found $LARGE_FILE_COUNT file(s) larger than 50MB"
@@ -100,9 +104,12 @@ fi
 print_info "Copying files..."
 if command -v rsync &> /dev/null; then
     print_info "Using rsync for better progress tracking..."
+    # Ensure destination directory exists
+    mkdir -p "$DEST_PATH"
     rsync -av --progress "$SOURCE_PATH/" "$DEST_PATH/"
 else
     print_info "Using cp (rsync not available)..."
+    # cp -r will create the destination directory
     cp -r "$SOURCE_PATH" "$DEST_PATH"
 fi
 

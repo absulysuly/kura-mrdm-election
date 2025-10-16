@@ -13,7 +13,6 @@ Desktop.ini
 *.temp
 *.swp
 *.swo
-*~
 .*.swp
 
 # Log Files
@@ -83,7 +82,6 @@ htmlcov/
 # Backup Files
 *.bak
 *.backup
-*~
 
 # Add any project-specific exclusions below this line
 # Example:
